@@ -67,6 +67,12 @@ a:hover{color:var(--blue-600);text-decoration:underline}
 .badge{display:inline-flex;align-items:center;height:38px;padding:0 20px;border-radius:var(--radius-full);font-size:var(--fs-eyebrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border-on-dark);color:#fff}
 .card{background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-card)}
 .legal{font:400 var(--fs-micro)/1.5 var(--font-core);color:var(--text-muted)}
+.link-more{background:none;border:none;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px;opacity:.85}
+.link-more:hover{opacity:1}
+.fn-ref{background:none;border:none;padding:0 1px;margin:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px}
+#fn-pop{position:absolute;z-index:60;max-width:360px;background:#fff;color:var(--navy-900);border:1px solid #d5def5;border-radius:10px;box-shadow:0 8px 24px rgba(20,30,80,.14);padding:12px 14px;font:400 var(--fs-micro)/1.5 var(--font-core);display:none}
+.fn-print{display:none}
+@media print{.fn-print{display:block!important}.legal-rest[hidden]{display:inline!important}#flegal-body[hidden]{display:block!important}.link-more,#fn-pop{display:none!important}}
 
 /* ============ header / hero ============ */
 .hero{position:relative;background:var(--gradient-hero);padding-bottom:130px;overflow:hidden}
@@ -232,7 +238,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
 .plan-best .plan-row b{color:#fff}
 .plan .btn{margin-top:18px;width:100%}
 @media (max-width:1119px){.plans{grid-template-columns:1fr 1fr}}
-@media (max-width:767px){.plans{grid-template-columns:1fr;row-gap:28px}}
+@media (max-width:767px){.plans{grid-template-columns:1fr;row-gap:28px}.plans .plan-best{order:-1}}
 
 /* ============ ритм секций ============
    Чередуем белую и лавандовую полосы (--blue-50 из ДС), один блок — на фирменном градиенте.
@@ -430,7 +436,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
         <a class="btn btn-accent" href="#quiz" data-cta="hero-plan">Составить план за 40 секунд</a>
         <a class="btn btn-ondark" href="#" data-cta="hero-open">Начать копить</a>
       </div>
-      <p class="legal hero-legal">Предварительный расчёт, не&nbsp;является гарантией дохода. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Государственная поддержка&nbsp;— при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</p>
+      <p class="legal hero-legal">Предварительный расчёт, не&nbsp;является гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Государственная поддержка&nbsp;— при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</span></p>
     </div>
   </div>
 </div>
@@ -447,16 +453,16 @@ a:hover{color:var(--blue-600);text-decoration:underline}
   <div class="card stat-card">
     <span class="gz-icon">schedule</span>
     <div class="stat-value" id="hero-term">5 лет</div>
-    <div class="stat-caption">при взносе 10 000 ₽ в месяц — с господдержкой¹, инвестиционным доходом² и при самостоятельном внесении на счёт полученного налогового вычета³</div>
+    <div class="stat-caption">при взносе 10 000 ₽ в месяц — с господдержкой<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button>, инвестиционным доходом<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button> и при самостоятельном внесении на счёт полученного налогового вычета<button type="button" class="fn-ref" data-fn="3" aria-label="Сноска 3" aria-expanded="false">³</button></div>
   </div>
   <div class="card stat-card">
     <span class="gz-icon">volunteer_activism</span>
     <div class="stat-value">до 360 000 ₽</div>
-    <div class="stat-caption">может добавить государство за 10 лет уплаты взносов — до 36 000 ₽ в год¹</div>
+    <div class="stat-caption">может добавить государство за 10 лет уплаты взносов — до 36 000 ₽ в год<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button></div>
   </div>
 </div>
-<div class="container reveal">
-  <p class="legal" style="margin-top:14px">
+<div class="container">
+  <p class="legal fn-print">
     ¹ Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»; размер определяется на основании данных ФНС России о вашем среднемесячном доходе.
     ² Результаты инвестирования в прошлом не определяют доходов в будущем, доходность не гарантируется; в расчётах использована ставка 10% годовых исключительно для наглядности.
     ³ Налоговый вычет предоставляется налоговым органом по вашему обращению; полученную сумму вы можете самостоятельно внести на счёт.
@@ -476,13 +482,13 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       <div class="utp-main">
         <span class="utp-eyebrow">Наш лучший план</span>
         <h3 class="utp-title">Миллион за&nbsp;5&nbsp;лет — по&nbsp;10&nbsp;000&nbsp;₽ в&nbsp;месяц*</h3>
-        <p class="utp-sub">Старт 10&nbsp;000&nbsp;₽, затем 10&nbsp;000&nbsp;₽ ежемесячно. Складываются ваши взносы, господдержка 1&nbsp;к&nbsp;4¹, самостоятельно внесённый на&nbsp;счёт налоговый вычет³ и&nbsp;инвестиционный доход, начисленный фондом².</p>
+        <p class="utp-sub">Старт 10&nbsp;000&nbsp;₽, затем 10&nbsp;000&nbsp;₽ ежемесячно. Складываются ваши взносы, господдержка 1&nbsp;к&nbsp;4<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button>, самостоятельно внесённый на&nbsp;счёт налоговый вычет<button type="button" class="fn-ref" data-fn="3" aria-label="Сноска 3" aria-expanded="false">³</button> и&nbsp;инвестиционный доход, начисленный фондом<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button>.</p>
         <div class="utp-facts" id="utp-facts"></div>
       </div>
       <div class="utp-cta">
         <button type="button" class="btn btn-accent" id="utp-go" data-cta="utp-plan">Показать этот план</button>
         <span class="utp-note">или ответьте на&nbsp;вопросы ниже и&nbsp;соберите свой</span>
-        <span class="utp-note" style="margin-top:6px">*&nbsp;Предварительный расчёт, не&nbsp;является гарантией дохода. Сноски&nbsp;— выше на&nbsp;странице</span>
+        <span class="utp-note" style="margin-top:6px">*&nbsp;Предварительный расчёт, не&nbsp;является гарантией дохода</span>
       </div>
     </div>
 
@@ -549,7 +555,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
         <a class="btn btn-accent" href="#" data-cta="compare-open">Начать копить</a>
         <span class="sec-cta-note">Договор — онлайн за 2–3 минуты. Взносы и их размер вы меняете в любой момент</span>
       </div>
-      <p class="legal" style="margin-top:16px">Наведите курсор на график, чтобы посмотреть суммы на любой месяц. Предварительный расчёт, не является офертой и гарантией дохода. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год); в расчёте учтено, что полученный вычет вы самостоятельно вносите на счёт. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов; её размер определяется на основании данных ФНС России о вашем среднемесячном доходе, зачисление — в году, следующем за годом уплаты взносов. Условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</p>
+      <p class="legal" style="margin-top:16px">Наведите курсор на график, чтобы посмотреть суммы на любой месяц. Предварительный расчёт, не является офертой и гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год); в расчёте учтено, что полученный вычет вы самостоятельно вносите на счёт. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов; её размер определяется на основании данных ФНС России о вашем среднемесячном доходе, зачисление — в году, следующем за годом уплаты взносов. Условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</span></p>
     </div>
   </div>
 </section>
@@ -568,7 +574,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       <a class="btn btn-accent" href="#" data-cta="plans-open">Начать копить</a>
       <span class="sec-cta-note">Взнос можно изменить в любой момент — план не фиксируется договором</span>
     </div>
-    <p class="legal" style="margin-top:18px">Во всех планах: стартовый взнос 10 000 ₽, доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. Предварительный расчёт, не является офертой и гарантией дохода. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом.</p>
+    <p class="legal" style="margin-top:18px">Во всех планах: стартовый взнос 10 000 ₽, доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. Предварительный расчёт, не является офертой и гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом.</span></p>
   </div>
 </section>
 
@@ -635,7 +641,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
     </div>
     <span class="asv" role="img" aria-label="Долгосрочные сбережения гарантированы — АСВ"></span>
   </div>
-  <div class="footer-legal">Информация носит справочный характер, не является офертой, индивидуальной инвестиционной рекомендацией или обещанием доходности. Все расчёты предварительные; ставка 10% годовых использована исключительно для наглядности примеров и не является прогнозом результатов инвестиционной деятельности фонда. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Государственная поддержка формирования долгосрочных сбережений предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: при уплате сберегательных взносов от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов; максимальный размер — 36 000 ₽ в год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на основании данных ФНС России о среднемесячном доходе вкладчика. Налоговый вычет предоставляется с суммы уплаченных сберегательных взносов (не более 400 000 ₽ в год) по применимой ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором: по общему правилу — через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин), а также в особых жизненных ситуациях. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше суммы уплаченных взносов; также могут быть утрачены налоговые льготы и право на государственную поддержку. Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽. До заключения договора необходимо ознакомиться с уставом фонда, правилами формирования долгосрочных сбережений и ключевым информационным документом.</div>
+  <div class="footer-legal">Информация носит справочный характер, не является офертой, индивидуальной инвестиционной рекомендацией или обещанием доходности. Все расчёты предварительные; ставка 10% годовых использована исключительно для наглядности примеров и не является прогнозом результатов инвестиционной деятельности фонда. <button type="button" class="link-more" id="flegal-btn" aria-expanded="false" aria-controls="flegal-body" data-alt="Свернуть">Полная правовая информация</button><div id="flegal-body" hidden style="margin-top:10px">Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Государственная поддержка формирования долгосрочных сбережений предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: при уплате сберегательных взносов от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов; максимальный размер — 36 000 ₽ в год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на основании данных ФНС России о среднемесячном доходе вкладчика. Налоговый вычет предоставляется с суммы уплаченных сберегательных взносов (не более 400 000 ₽ в год) по применимой ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором: по общему правилу — через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин), а также в особых жизненных ситуациях. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше суммы уплаченных взносов; также могут быть утрачены налоговые льготы и право на государственную поддержку. Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽. До заключения договора необходимо ознакомиться с уставом фонда, правилами формирования долгосрочных сбережений и ключевым информационным документом.</div></div>
 </footer>
 
 <script src="calc.js"></script>
@@ -679,6 +685,14 @@ a:hover{color:var(--blue-600);text-decoration:underline}
     if (frac) word = i >= 5 || i === 0 ? "лет" : "года";
     return (frac ? String(i) + ",5" : String(i)) + " " + (frac ? word : word);
   }
+  function durStrIn(months) {  /* «в течение 5 лет» — родительный падеж */
+    var y = Math.floor(months / 12), m = months % 12, parts = [];
+    var gy = function (n) { return n % 10 === 1 && n % 100 !== 11 ? "года" : "лет"; };
+    var gm = function (n) { return n % 10 === 1 && n % 100 !== 11 ? "месяца" : "месяцев"; };
+    if (y) parts.push(y + " " + gy(y));
+    if (m) parts.push(m + " " + gm(m));
+    return "в течение " + parts.join(" и ");
+  }
   function durStr(months) {
     if (months < 12) return "за " + months + " " + (months === 1 ? "месяц" : months < 5 ? "месяца" : "месяцев");
     return "за " + yearsWord(months / 12);
@@ -708,7 +722,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       title: "С какой суммы начнём?",
       why: "Стартовый взнос — необязательный, но он заметно ускоряет цель",
       presets: [
-        { label: "10 000 ₽", value: 10000, accent: "Наш выбор" },
+        { label: "10 000 ₽", value: 10000, accent: "Рекомендуем" },
         { label: "50 000 ₽", value: 50000 },
         { label: "100 000 ₽", value: 100000 },
         { field: true, placeholder: "Своя сумма, ₽" }
@@ -723,7 +737,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
         return [
           { label: "3 000 ₽", value: 3000, caption: presetCaption(3000) },
           { label: "6 000 ₽", value: 6000, caption: presetCaption(6000) },
-          { label: "10 000 ₽", value: 10000, caption: presetCaption(10000), accent: "Наш выбор" },
+          { label: "10 000 ₽", value: 10000, caption: presetCaption(10000), accent: "Рекомендуем" },
           { label: "12 000 ₽", value: 12000, caption: presetCaption(12000) },
           { field: true, placeholder: "Своя сумма, ₽" }
         ];
@@ -982,9 +996,10 @@ a:hover{color:var(--blue-600);text-decoration:underline}
          '<button type="button" class="btn btn-quiet" id="q-restart"><span class="gz-icon" style="font-size:18px">refresh</span>Изменить ответы</button></div>';
     h += donut.close + "</div>";
 
-    h += '<p class="legal r-legal">Размер государственной поддержки определяется администратором софинансирования исходя из суммы уплаченных вами сберегательных взносов за истекший календарный год и данных ФНС России о вашем среднемесячном доходе.' +
-      (S.kLabel ? " В расчёте: доход «" + esc(S.kLabel).toLowerCase() + "». " : " ") +
-      'Предварительный расчёт, не является офертой и гарантией дохода. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Ставка 10% годовых использована исключительно для наглядности примера. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов, при взносах от 2 000 ₽ в год; условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах». Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год) по применимой к вашим доходам ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором.</p>';
+    h += '<p class="legal r-legal">Предварительный расчёт, не является офертой и гарантией дохода.' +
+      (S.kLabel ? " В расчёте: доход «" + esc(S.kLabel).toLowerCase() + "»." : "") +
+      ' <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button>' +
+      '<span class="legal-rest" hidden> Размер государственной поддержки определяется администратором софинансирования исходя из суммы уплаченных вами сберегательных взносов за истекший календарный год и данных ФНС России о вашем среднемесячном доходе. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом. Ставка 10% годовых использована исключительно для наглядности примера. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов, при взносах от 2 000 ₽ в год; условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах». Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год) по применимой к вашим доходам ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором.</span></p>';
 
     card.innerHTML = '<div class="q-inner r-inner">' + h + "</div>";
     card.scrollTop = prevScroll;   /* позиция внутри карточки сохраняется, страница не двигается */
@@ -1037,8 +1052,8 @@ a:hover{color:var(--blue-600);text-decoration:underline}
   (function () {
     var PLANS = [
       { name: "Минимальный", monthly: 3000 },
-      { name: "Умеренный", monthly: 6000 },
-      { name: "Оптимальный", monthly: 10000, best: true, tag: "Наш выбор" }
+      { name: "Оптимальный", monthly: 10000, best: true, tag: "Рекомендуем" },
+      { name: "Умеренный", monthly: 6000 }
     ];
     var base = { first: 10000, k: 0.25, reinvest: true, startMonth: START_MONTH };
     var calc = PLANS.map(function (pl) {
@@ -1046,7 +1061,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       var g = sim.goalMonths, h = sim.hist[g - 1];
       return { g: g, own: h.contrib, added: h.value - h.contrib, total: h.value };
     });
-    var bestG = calc[2].g;
+    var bestG = calc[PLANS.map(function (p) { return !!p.best; }).indexOf(true)].g;
     function yearsRound(m) {   // «≈ 5 лет» / «≈ 7,5 лет» — без месяцев
       var y = Math.round(m / 6) / 2;
       var i = Math.floor(y), half = y !== i;
@@ -1114,7 +1129,7 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       { cls: "coin-you", who: "Вы", what: "Откладываете " + rub(UTP.monthly) + " в месяц — автоматически, с карты", sum: own },
       { cls: "coin-gov", who: "Государство", what: "Добавляет свои деньги к вашим взносам — до 36 000 ₽ в год, первые 10 лет", sum: gov },
       { cls: "coin-tax", who: "Налоговый вычет", what: "Часть уплаченного НДФЛ, которую вы получаете в налоговом органе и сами вносите на счёт — это тоже ваши деньги", sum: tax },
-      { cls: "coin-fund", who: "Фонд", what: "Начисляет инвестиционный доход на средства на счёте; доходность не гарантируется", sum: fund }
+      { cls: "coin-fund", who: "Фонд", what: 'Начисляет инвестиционный доход на средства на счёте<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button>', sum: fund }
     ];
     document.getElementById("share-list").innerHTML = ROWS.map(function (r) {
       return '<li><span class="s-dot ' + r.cls + '"></span><span class="s-text"><span class="s-who">' + r.who + "</span>" +
@@ -1125,11 +1140,56 @@ a:hover{color:var(--blue-600);text-decoration:underline}
       "Ваши взносы — <b>" + rub(own) + "</b>, а на счёте будет <b>" + rub(total) +
       "</b>: добавятся господдержка, внесённый вами вычет и инвестиционный доход.";
 
-    document.getElementById("share-legal").textContent =
+    document.getElementById("share-legal").innerHTML =
       "Расчёт для примера: первый взнос " + rub(UTP.first) + " и " + rub(UTP.monthly) +
-      " в месяц " + durStr(g) + ", доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. " +
-      "Предварительный расчёт, не является офертой и гарантией дохода. Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом.";
+      " в месяц " + durStrIn(g) + ", доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. " +
+      "Предварительный расчёт, не является офертой и гарантией дохода. " +
+      '<button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button>' +
+      '<span class="legal-rest" hidden> Результаты инвестирования в прошлом не определяют доходов в будущем, доходность размещения средств по договорам долгосрочных сбережений не гарантируется государством и фондом.</span>';
   })();
+
+  /* ---------- юридические оговорки: сноски-поповеры и «Подробнее» ----------
+     Скрытые тексты остаются в HTML (display:none/hidden), при печати страницы
+     раскрываются полностью (см. @media print). Ховера нет намеренно: на
+     сенсорных экранах он не работает, всё открывается кликом/тапом. ---------- */
+  var FN = {
+    "1": "Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: взносы от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов, до 36 000 ₽ в год; размер определяется на основании данных ФНС России о вашем среднемесячном доходе.",
+    "2": "Результаты инвестирования в прошлом не определяют доходов в будущем, доходность не гарантируется; в расчётах использована ставка 10% годовых исключительно для наглядности.",
+    "3": "Налоговый вычет предоставляется налоговым органом по вашему обращению; полученную сумму вы можете самостоятельно внести на счёт."
+  };
+  var fnPop = document.createElement("div");
+  fnPop.id = "fn-pop"; fnPop.setAttribute("role", "note");
+  document.body.appendChild(fnPop);
+  var fnCur = null;
+  function fnHide() { fnPop.style.display = "none"; if (fnCur) { fnCur.setAttribute("aria-expanded", "false"); fnCur = null; } }
+  document.addEventListener("click", function (e) {
+    var more = e.target.closest ? e.target.closest(".link-more") : null;
+    if (more) {
+      var rest = more.nextElementSibling;
+      if (rest) {
+        var open = rest.hasAttribute("hidden");
+        if (open) rest.removeAttribute("hidden"); else rest.setAttribute("hidden", "");
+        more.setAttribute("aria-expanded", open ? "true" : "false");
+        if (more.dataset.alt) { var t = more.textContent; more.textContent = more.dataset.alt; more.dataset.alt = t; }
+      }
+      return;
+    }
+    var ref = e.target.closest ? e.target.closest(".fn-ref") : null;
+    if (ref && FN[ref.dataset.fn]) {
+      if (fnCur === ref) { fnHide(); return; }
+      fnHide();
+      fnPop.textContent = FN[ref.dataset.fn];
+      fnPop.style.display = "block";
+      var r = ref.getBoundingClientRect(), w = fnPop.offsetWidth || 320;
+      var maxL = (document.documentElement.clientWidth || 1000) - w - 8;
+      fnPop.style.left = Math.max(8, Math.min(r.left + window.scrollX - 16, maxL)) + "px";
+      fnPop.style.top = (r.bottom + window.scrollY + 8) + "px";
+      ref.setAttribute("aria-expanded", "true"); fnCur = ref;
+      return;
+    }
+    fnHide();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") fnHide(); });
 
   /* ---------- появление блоков при прокрутке ----------
      IntersectionObserver вместо слушателя scroll: браузер сам сообщает о пересечении,
