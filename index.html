@@ -4,10 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Цель — миллион | НПФ ГАЗФОНД пенсионные накопления</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=block" rel="stylesheet">
+<!-- Шрифты лежат в assets/fonts (без внешних запросов к Google Fonts).
+     Golos Text — SIL OFL 1.1; Material Symbols Rounded — Apache 2.0; лицензии рядом с файлами.
+     Иконочный шрифт урезан до используемых значков: новый значок → пересобрать файл (см. DEPLOY.md). -->
+<link rel="preload" href="assets/fonts/golos-text-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/material-symbols-rounded.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* ============ шрифты (локальные) ============ */
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/golos-text-400.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/golos-text-500.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/golos-text-600.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/golos-text-700.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:800;font-display:swap;src:url("assets/fonts/golos-text-800.woff2") format("woff2")}
+@font-face{font-family:"Material Symbols Rounded";font-style:normal;font-weight:400;font-display:block;src:url("assets/fonts/material-symbols-rounded.woff2") format("woff2")}
+
 /* ============ foundations (токены дизайн-системы ГАЗФОНД ПН) ============ */
 :root{
   --blue-50:#F4F5FF;--blue-100:#E8EBFF;--blue-200:#B9CEFF;--blue-300:#6BABFF;
@@ -2135,8 +2146,8 @@ h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-w
     });
   })();
 
-  /* ---------- страховка на случай недоступных Google Fonts ----------
-     Если шрифт иконок не загрузился, браузер покажет их текстовые имена
+  /* ---------- страховка на случай, если шрифт иконок не загрузился ----------
+     (файл не выложен, заблокирован политикой и т. п.) Браузер показал бы текстовые имена
      («headset_mic»). Прячем иконки — вёрстка остаётся целой. */
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function () {
