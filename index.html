@@ -166,13 +166,15 @@ h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-w
 .utp-cta{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .utp-note{font:400 var(--fs-micro)/1.4 var(--font-core);color:var(--text-on-dark-muted);max-width:210px}
 
-/* Карточка квиза: без рамки и тени — просто область фиксированной высоты */
+/* Карточка квиза: без рамки и тени. Высота — по содержимому: на вопросах компактная,
+   на экране результата раскрывается. Смена высоты анимируется скриптом (morphHeight):
+   .quiz-body получает явную высоту на время перехода, затем снова auto */
 .quiz-card{padding:0;max-width:none;margin:0;background:transparent;box-shadow:none;border-radius:0;
-  min-height:600px;display:flex;flex-direction:column}
+  min-height:0;display:flex;flex-direction:column}
 .quiz-steps{flex:none}
-.quiz-body{flex:1;min-height:0;display:flex;flex-direction:column}
-/* Контент прижат к прогресс-линии сверху: вопросы не «прыгают» при смене шага,
-   высота карточки при этом остаётся постоянной (min-height на .quiz-card) */
+.quiz-body{flex:none;min-height:0;display:flex;flex-direction:column;transition:height .3s ease}
+.quiz-body.is-resizing{overflow:hidden}
+/* Контент прижат к прогресс-линии сверху: вопросы не «прыгают» при смене шага */
 .q-inner{margin-top:0;width:100%;animation:q-fade .18s ease}
 @keyframes q-fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .qsteps{display:flex;gap:8px;align-items:center;margin-bottom:clamp(20px,2.4vw,30px)}
@@ -788,6 +790,26 @@ h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-w
   var card = document.getElementById("quiz-body");
   var stepsBox = document.getElementById("quiz-steps");
 
+  /* Высота блока — по содержимому. Чтобы при смене шага и появлении результата
+     страница не дёргалась, перерисовка обёрнута в плавный переход высоты:
+     запомнили старую высоту → отрисовали новое → довели высоту до новой → отпустили в auto. */
+  var morphTimer = null;
+  function morphHeight(render) {
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var h0 = card.offsetHeight;          // текущая высота, в том числе посреди незаконченного перехода
+    card.style.height = "";              // отпустить, чтобы измерить новое содержимое
+    render();
+    if (reduce || !h0) { card.classList.remove("is-resizing"); return; }
+    var h1 = card.offsetHeight;
+    if (Math.abs(h1 - h0) < 2) { card.classList.remove("is-resizing"); return; }
+    card.classList.add("is-resizing");
+    card.style.height = h0 + "px";
+    void card.offsetHeight;              // зафиксировать стартовую высоту до смены
+    card.style.height = h1 + "px";
+    clearTimeout(morphTimer);
+    morphTimer = setTimeout(function () { card.style.height = ""; card.classList.remove("is-resizing"); }, 320);
+  }
+
   function params() {
     return { first: S.first || 0, monthly: S.monthly || 0, k: S.k == null ? 0.25 : S.k, reinvest: S.reinvest, startMonth: START_MONTH };
   }
@@ -872,7 +894,8 @@ h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-w
     return h + "</div>";
   }
 
-  function renderQuestion() {
+  function renderQuestion() { morphHeight(renderQuestionNow); }
+  function renderQuestionNow() {
     var q = QUESTIONS[S.step];
     var presets = typeof q.presets === "function" ? q.presets() : q.presets;
     stepsBox.innerHTML = renderSteps();
@@ -997,7 +1020,8 @@ h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-w
     return UTP_GOAL_CACHE;
   }
 
-  function renderResult(keepScroll) {
+  function renderResult(keepScroll) { morphHeight(function () { renderResultNow(keepScroll); }); }
+  function renderResultNow(keepScroll) {
     var prevScroll = keepScroll ? card.scrollTop : 0;
     var p = params();
     /* Базовый план — без реинвеста вычета. Его срок задаёт ФИКСИРОВАННУЮ дату,
